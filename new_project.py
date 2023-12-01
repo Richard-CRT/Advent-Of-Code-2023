@@ -37,7 +37,7 @@ def new_project(url, new_project_name):
         print (f"Solution file `{sln_file}` not found")
         raise
     else:
-        regex = r"(\s*Project\s*?\(\"{[^}]+}\"\)\s*?=\s*?\")" + template_project + "(\"\s*?,\s*?\")[^\"]+(\"\s*?,\s*?\"{)[^}]+(}\"\s*?EndProject)"
+        regex = r"(\s*Project\s*?\(\"{[^}]+}\"\)\s*?=\s*?\")" + template_project + r"(\"\s*?,\s*?\")[^\"]+(\"\s*?,\s*?\"{)[^}]+(}\"\s*?EndProject)"
         m = re.search(regex, sln_contents)
         if m:
             print(f"Generating new project definition `{new_project_name}` for `{sln_file}`")
