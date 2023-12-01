@@ -14,13 +14,13 @@ def download_input(url, dst_input):
     input_url = f"{url}/input"
     print(f"Downloading contents for `{dst_input}` from `{input_url}`")
     try:
-        cj = browser_cookie3.load(domain_name='adventofcode.com')
+        cj = browser_cookie3.firefox(domain_name='adventofcode.com')
         resp = requests.get(input_url, cookies=cj)
     except Exception as err:
         print(f"Error downloading input from `{input_url}`, contents not written to `{dst_input}`")
         raise
     else:
-        if resp.status_code == 200:            
+        if resp.status_code == 200:
             input_contents = str(resp.text)
             
             print(f"Writing input from `{input_url}` to `{dst_input}`")
@@ -90,7 +90,10 @@ def main():
         close_h2 = html.index(close_del)
         title = html[open_h2 + len(open_del):close_h2]
         print(f"Original title is `{title}`")
-        renamed_title = title.replace(":", "").replace(" ", "_")
+        renamed_title = title.replace(" ", "_")
+        keep_chars = set("abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789_-&")
+        for remove_char in set(renamed_title).difference(keep_chars):
+            renamed_title = renamed_title.replace(remove_char, "")
         renamed_title = re.sub(r"Day_(\d_.+)", "Day_0\\1", renamed_title, 1)
         print(f"Suggested project title is `{renamed_title}`")
         r = ""
