@@ -9,6 +9,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AoCUtilities", "AoCUtilitie
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Day_01_Trebuchet", "Day_01_Trebuchet\Day_01_Trebuchet.csproj", "{7C6A5994-53B1-43E7-944F-2D7150668C61}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Day_02_Cube_Conundrum", "Day_02_Cube_Conundrum\Day_02_Cube_Conundrum.csproj", "{DE8C0461-10BB-4964-A565-F2E4E446417B}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +29,10 @@ Global
 		{7C6A5994-53B1-43E7-944F-2D7150668C61}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7C6A5994-53B1-43E7-944F-2D7150668C61}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7C6A5994-53B1-43E7-944F-2D7150668C61}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DE8C0461-10BB-4964-A565-F2E4E446417B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DE8C0461-10BB-4964-A565-F2E4E446417B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DE8C0461-10BB-4964-A565-F2E4E446417B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DE8C0461-10BB-4964-A565-F2E4E446417B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
