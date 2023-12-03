@@ -11,6 +11,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Day_01_Trebuchet", "Day_01_
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Day_02_Cube_Conundrum", "Day_02_Cube_Conundrum\Day_02_Cube_Conundrum.csproj", "{DE8C0461-10BB-4964-A565-F2E4E446417B}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Day_03_Gear_Ratios", "Day_03_Gear_Ratios\Day_03_Gear_Ratios.csproj", "{BA965C4E-C690-490C-9E47-E89383BF15DB}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -33,6 +35,10 @@ Global
 		{DE8C0461-10BB-4964-A565-F2E4E446417B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{DE8C0461-10BB-4964-A565-F2E4E446417B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{DE8C0461-10BB-4964-A565-F2E4E446417B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BA965C4E-C690-490C-9E47-E89383BF15DB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BA965C4E-C690-490C-9E47-E89383BF15DB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BA965C4E-C690-490C-9E47-E89383BF15DB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BA965C4E-C690-490C-9E47-E89383BF15DB}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
