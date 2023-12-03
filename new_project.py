@@ -29,7 +29,7 @@ def download_input(url, dst_input):
         else:
             print(f"HTTP error code `{resp.status_code}` when attempting to read input (indicates invalid session cookie)")
 
-def new_project(url, new_project_name):    
+def new_project(url, new_project_name, dst_input):    
     try:
         with open(sln_file, 'r') as file:
             sln_contents = file.read()
@@ -48,7 +48,6 @@ def new_project(url, new_project_name):
             os.mkdir(new_project_name)
             
             src_input = os.path.join(template_project, "input.txt")
-            dst_input = os.path.join(new_project_name, "input.txt")
             print(f"Copying `{src_input}` to `{dst_input}`")
             shutil.copyfile(src_input, dst_input)
             src_proj = os.path.join(template_project, "TemplateProject.csproj")
@@ -111,12 +110,21 @@ def main():
             r = renamed_title
         print(f"Using project name `{r}`")
         print(f"Checking if directory `{r}` already exists")
+        dst_input = os.path.join(r, "input.txt")
         if (os.path.exists(r)):
             print(f"Directory `{r}` already exists")
+            r = ""
+            while r != "y" and r != "n":
+                r = input("Do you want to re-download the input.txt anyway? [y/N] ").lower()
+                if r == "":
+                    r = "n"
+            if r == "y":
+                download_input(url, dst_input)
         else:
-            new_project(url, r)
+            new_project(url, r, dst_input)
     except Exception as err:
         print(repr(err))
         input("Pausing for operator to review exception... ")
 
 main()
+input("Press enter to continue... ")
