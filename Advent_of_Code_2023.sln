@@ -17,6 +17,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Day_04_Scratchcards", "Day_
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Day_05_If_You_Give_A_Seed_A_Fertilizer", "Day_05_If_You_Give_A_Seed_A_Fertilizer\Day_05_If_You_Give_A_Seed_A_Fertilizer.csproj", "{EE3DEDCD-32DA-4D77-B735-111AAD2F43C3}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Day_06_Wait_For_It", "Day_06_Wait_For_It\Day_06_Wait_For_It.csproj", "{F712F3D6-40C9-4210-99A6-9FA0C3BE1CEB}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -51,6 +53,10 @@ Global
 		{EE3DEDCD-32DA-4D77-B735-111AAD2F43C3}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{EE3DEDCD-32DA-4D77-B735-111AAD2F43C3}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{EE3DEDCD-32DA-4D77-B735-111AAD2F43C3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F712F3D6-40C9-4210-99A6-9FA0C3BE1CEB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F712F3D6-40C9-4210-99A6-9FA0C3BE1CEB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F712F3D6-40C9-4210-99A6-9FA0C3BE1CEB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F712F3D6-40C9-4210-99A6-9FA0C3BE1CEB}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
