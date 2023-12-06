@@ -225,6 +225,7 @@ void P2()
     }
     Int64 result = sourceRanges.MinBy(r => r.Item1).Item1;
     Console.WriteLine(result);
+    Console.ReadLine();
 }
 
 P1();
