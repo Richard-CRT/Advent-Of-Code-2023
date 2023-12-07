@@ -1,5 +1,6 @@
 ﻿using AdventOfCodeUtilities;
 using System.Diagnostics;
+using System.IO;
 using System.Text.RegularExpressions;
 
 List<string> inputList = AoC.GetInputLines();
@@ -26,7 +27,30 @@ void P1()
 void P2()
 {
     int result = 0;
-    var ordered = pairs.OrderBy(pair => pair.Item1, new Compararer(true)).ToList();
+    var ordered = pairs.OrderByLambda(pair => pair.Item1, (x, y) =>
+    {
+        Debug.Assert(x is not null && y is not null);
+        if (y.GetType(true) > x.GetType(true))
+            return -1;
+        else if (x.GetType(true) > y.GetType(true))
+            return 1;
+        else
+        {
+            for (int i = 0; i < 5; i++)
+            {
+                int xVal, yVal;
+                xVal = !true ? x.Cards[i] : (x.Jokers[i] ? 1 : x.Cards[i]);
+                yVal = !true ? y.Cards[i] : (y.Jokers[i] ? 1 : y.Cards[i]);
+
+                if (xVal > yVal)
+                    return 1;
+                else if (yVal > xVal)
+                    return -1;
+            }
+        }
+        return 0;
+    }).ToList();
+
     for (int i = 0; i < ordered.Count; i++)
     {
         var pair = ordered[i];
