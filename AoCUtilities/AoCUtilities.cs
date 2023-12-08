@@ -91,19 +91,13 @@ namespace AdventOfCodeUtilities
             this IEnumerable<TSource> source,
             Func<TSource, TKey> keySelector,
             Func<TKey?, TKey?, int> compareFunc)
-        {
-            var comparer = new AoCComparer<TKey>(compareFunc, false);
-            return source.OrderBy(keySelector, comparer);
-        }
+        => source.OrderBy(keySelector, new AoCComparer<TKey>(compareFunc, false));
 
         public static IOrderedEnumerable<TSource> OrderByLambdaDescending<TSource, TKey>(
             this IEnumerable<TSource> source,
             Func<TSource, TKey> keySelector,
             Func<TKey?, TKey?, int> compareFunc)
-        {
-            var comparer = new AoCComparer<TKey>(compareFunc, true);
-            return source.OrderBy(keySelector, comparer);
-        }
+        => source.OrderBy(keySelector, new AoCComparer<TKey>(compareFunc, true));
     }
 
     internal class AoCComparer<TKey> : IComparer<TKey>
