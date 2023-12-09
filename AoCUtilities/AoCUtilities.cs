@@ -9,18 +9,18 @@ namespace AdventOfCodeUtilities
 {
     public static class AoC
     {
-        public static int GCF(int a, int b)
+        public static Int64 GCF(Int64 a, Int64 b)
         {
             while (b != 0)
             {
-                int temp = b;
+                Int64 temp = b;
                 b = a % b;
                 a = temp;
             }
             return a;
         }
 
-        public static int LCM(int a, int b)
+        public static Int64 LCM(Int64 a, Int64 b)
         {
             return (a / GCF(a, b)) * b;
         }
