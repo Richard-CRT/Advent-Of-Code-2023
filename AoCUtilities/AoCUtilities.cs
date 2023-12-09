@@ -87,13 +87,24 @@ namespace AdventOfCodeUtilities
             return Regex.Matches(input, pattern, options);
         }
 
-        public static IOrderedEnumerable<TSource> OrderByLambda<TSource, TKey>(
+        static public double RunWithStopwatch(Action action, Int64 repeats)
+        {
+            Stopwatch sw = Stopwatch.StartNew();
+            for (Int64 i = 0; i < repeats; i++)
+                action();
+            sw.Stop();
+            double elapsedSeconds = (sw.ElapsedTicks / (double)Stopwatch.Frequency);
+            double secondsPerRun = elapsedSeconds / repeats;
+            return secondsPerRun;
+        }
+
+        static public IOrderedEnumerable<TSource> OrderByLambda<TSource, TKey>(
             this IEnumerable<TSource> source,
             Func<TSource, TKey> keySelector,
             Func<TKey?, TKey?, int> compareFunc)
         => source.OrderBy(keySelector, new AoCComparer<TKey>(compareFunc, false));
 
-        public static IOrderedEnumerable<TSource> OrderByLambdaDescending<TSource, TKey>(
+        static public IOrderedEnumerable<TSource> OrderByLambdaDescending<TSource, TKey>(
             this IEnumerable<TSource> source,
             Func<TSource, TKey> keySelector,
             Func<TKey?, TKey?, int> compareFunc)
