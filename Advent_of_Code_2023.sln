@@ -25,6 +25,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Day_08_Haunted_Wasteland", 
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Day_09_Mirage_Maintenance", "Day_09_Mirage_Maintenance\Day_09_Mirage_Maintenance.csproj", "{BFD7A345-74A9-4B07-A94A-99742FC5C5DC}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Day_10_Pipe_Maze", "Day_10_Pipe_Maze\Day_10_Pipe_Maze.csproj", "{E7AD0B6D-7276-4E85-B2E8-510683F82CAC}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -75,6 +77,10 @@ Global
 		{BFD7A345-74A9-4B07-A94A-99742FC5C5DC}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{BFD7A345-74A9-4B07-A94A-99742FC5C5DC}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{BFD7A345-74A9-4B07-A94A-99742FC5C5DC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E7AD0B6D-7276-4E85-B2E8-510683F82CAC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E7AD0B6D-7276-4E85-B2E8-510683F82CAC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E7AD0B6D-7276-4E85-B2E8-510683F82CAC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E7AD0B6D-7276-4E85-B2E8-510683F82CAC}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
