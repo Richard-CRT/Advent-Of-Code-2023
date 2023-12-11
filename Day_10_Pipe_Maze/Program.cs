@@ -19,7 +19,7 @@ map.ForEach(row => row.ForEach(
 startNode!.DeduceType(map);
 startNode.FindConnections(map);
 
-void P1and2()
+void P1()
 {
     // Quick loop through to determine which pieces are part of the main loop
     Node? currentNode = startNode;
@@ -52,10 +52,13 @@ void P1and2()
     int result = length / 2;
     Console.WriteLine(result);
     Console.ReadLine();
+}
 
+void P2()
+{
     // Loop through to find the nodes on left/right of the main loop
-    currentNode = startNode;
-    visitedNodes = new();
+    Node? currentNode = startNode;
+    HashSet<Node> visitedNodes = new();
     HashSet<Node> nodesOnLeftOfLoop = new();
     HashSet<Node> nodesOnRightOfLoop = new();
     while (currentNode is not null)
@@ -221,10 +224,10 @@ void P1and2()
         }
     }
 
+    HashSet<Node> totalNodesOnLeftOfLoop = new();
     if (outsideIsRight)
     {
         // Flood fill the nodes of the left of the loop
-        HashSet<Node> totalNodesOnLeftOfLoop = new();
         while (nodesOnLeftOfLoop.Any())
         {
             foreach (Node node in nodesOnLeftOfLoop)
@@ -241,15 +244,12 @@ void P1and2()
             }
             nodesOnLeftOfLoop = newNodesOnLeftOfLoop;
         }
-
-        Console.WriteLine(totalNodesOnLeftOfLoop.Count());
-        Console.ReadLine();
     }
 
+    HashSet<Node> totalNodesOnRightOfLoop = new();
     if (outsideIsLeft)
     {
         // Flood fill the nodes on the right of the loop
-        HashSet<Node> totalNodesOnRightOfLoop = new();
         while (nodesOnRightOfLoop.Any())
         {
             foreach (Node node in nodesOnRightOfLoop)
@@ -266,11 +266,20 @@ void P1and2()
             }
             nodesOnRightOfLoop = newNodesOnRightOfLoop;
         }
+    }
 
+    //PrintLoop();
+
+    if (outsideIsRight)
+    {
+        Console.WriteLine(totalNodesOnLeftOfLoop.Count());
+        Console.ReadLine();
+    }
+    else if (outsideIsLeft)
+    {
         Console.WriteLine(totalNodesOnRightOfLoop.Count());
         Console.ReadLine();
     }
-
 }
 
 void PrintLoop()
@@ -280,19 +289,27 @@ void PrintLoop()
         for (x = 0; x < map[y].Count; x++)
         {
             if (map[y][x].PartOfLoop)
+            {
+                Console.ForegroundColor = ConsoleColor.Gray;
                 Console.Write($"{Node.typeToPrintMaps[map[y][x].Type]}");
-            else if (map[y][x].RightOfLoop)
-                Console.Write("R");
-            else if (map[y][x].LeftOfLoop)
-                Console.Write("L");
+            }
             else
-                Console.Write("░");
+            {
+                Console.ForegroundColor = ConsoleColor.DarkRed;
+                if (map[y][x].RightOfLoop)
+                    Console.Write("R");
+                else if (map[y][x].LeftOfLoop)
+                    Console.Write("L");
+                else
+                    Console.Write("░");
+            }
         }
         Console.WriteLine();
     }
 }
 
-P1and2();
+P1();
+P2();
 
 public enum Direction
 {
