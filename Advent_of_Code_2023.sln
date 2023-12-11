@@ -27,6 +27,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Day_09_Mirage_Maintenance",
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Day_10_Pipe_Maze", "Day_10_Pipe_Maze\Day_10_Pipe_Maze.csproj", "{E7AD0B6D-7276-4E85-B2E8-510683F82CAC}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Day_11_Cosmic_Expansion", "Day_11_Cosmic_Expansion\Day_11_Cosmic_Expansion.csproj", "{D0E5AC97-EC26-4616-806A-0C1E1B064709}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -81,6 +83,10 @@ Global
 		{E7AD0B6D-7276-4E85-B2E8-510683F82CAC}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E7AD0B6D-7276-4E85-B2E8-510683F82CAC}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E7AD0B6D-7276-4E85-B2E8-510683F82CAC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D0E5AC97-EC26-4616-806A-0C1E1B064709}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D0E5AC97-EC26-4616-806A-0C1E1B064709}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D0E5AC97-EC26-4616-806A-0C1E1B064709}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D0E5AC97-EC26-4616-806A-0C1E1B064709}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
