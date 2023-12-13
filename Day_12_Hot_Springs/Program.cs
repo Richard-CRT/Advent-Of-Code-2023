@@ -66,9 +66,10 @@ bool CheckIfFitFormat(List<Type> row, List<int> format)
 }
 
 HashSet<string> existingEntries = new();
-HashSet<ReadOnlyCollection<Type>> existingEntries2 = new();
-Int64 recurse(List<int> format, List<Type> springWithSubstitutions, int targetDepth, int depth = 0)
+Int64 recurse(List<int> format, List<Type> springWithSubstitutions, int targetDepth, int depth = 1)
 {
+    if (depth == 1)
+        existingEntries.Clear();
     List<Type> possibility = new(springWithSubstitutions);
     Int64 count = 0;
     for (int i = 0; i < springWithSubstitutions.Count; i++)
@@ -80,14 +81,17 @@ Int64 recurse(List<int> format, List<Type> springWithSubstitutions, int targetDe
             if (!existingEntries.Contains(strRep))
             {
                 existingEntries.Add(strRep);
-                if (depth + 1 == targetDepth)
+                if (depth == targetDepth)
                 {
                     if (CheckIfFitFormat(possibility, format))
+                    {
                         count++;
+                    }
                 }
                 else
                 {
-                    count += recurse(format, possibility, targetDepth, depth + 1);
+                    Int64 recurseVal = recurse(format, possibility, targetDepth, depth + 1);
+                    count += recurseVal;
                 }
             }
             possibility[i] = Type.Unknown;
@@ -103,7 +107,7 @@ void P1()
     int i = 0;
     foreach (var entry in entries)
     {
-        existingEntries.Clear();
+        Console.WriteLine(i);
         (List<Type> springs, List<int> format) = entry;
         int numberOfDamaged = format.Sum();
         int numberOfKnownDamaged = springs.Count(s => s == Type.Damaged);
