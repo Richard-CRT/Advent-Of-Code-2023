@@ -33,6 +33,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Day_12_Hot_Springs", "Day_1
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Day_13_Point_of_Incidence", "Day_13_Point_of_Incidence\Day_13_Point_of_Incidence.csproj", "{002F265C-4CC1-4AF3-9E64-C3A082451D29}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Day_14_Parabolic_Reflector_Dish", "Day_14_Parabolic_Reflector_Dish\Day_14_Parabolic_Reflector_Dish.csproj", "{7F9B4E96-57CD-4774-8211-E9FA892C4427}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -99,6 +101,10 @@ Global
 		{002F265C-4CC1-4AF3-9E64-C3A082451D29}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{002F265C-4CC1-4AF3-9E64-C3A082451D29}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{002F265C-4CC1-4AF3-9E64-C3A082451D29}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7F9B4E96-57CD-4774-8211-E9FA892C4427}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7F9B4E96-57CD-4774-8211-E9FA892C4427}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7F9B4E96-57CD-4774-8211-E9FA892C4427}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7F9B4E96-57CD-4774-8211-E9FA892C4427}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
