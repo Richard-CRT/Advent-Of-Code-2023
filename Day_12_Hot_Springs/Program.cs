@@ -44,7 +44,7 @@ string BitwiseToString(int rowLength, UInt128 springWithSubstitutions, UInt128 u
     return s;
 }
 
-bool CheckIfFitFormat(UInt128 possibility, int rowLength, List<int> format)
+int CheckIfFitFormat(UInt128 possibility, int rowLength, List<int> format)
 {
     //string s = BitwiseToString(rowLength, possibility, 0);
     List<int> actualFormat = new();
@@ -77,21 +77,33 @@ bool CheckIfFitFormat(UInt128 possibility, int rowLength, List<int> format)
     {
         actualFormat.Add(batchLength);
     }
-    bool matches = true;
-    if (actualFormat.Count == format.Count)
+    int matches = 0;
+    if (actualFormat.Count > format.Count)
+        return -1;
+    for (int i = 0; i < actualFormat.Count; i++)
     {
-        for (int i = 0; i < format.Count; i++)
+        if (format[i] == actualFormat[i])
         {
-            if (format[i] != actualFormat[i])
-            {
-                matches = false;
-                break;
-            }
+            matches++;
+        }
+        else
+        {
+            matches = -1;
+            break;
         }
     }
-    else
-        matches = false;
     return matches;
+}
+
+State GetStateOfBitwise(UInt128 springs, UInt128 unknownBitwise, int index)
+{
+    UInt128 powerOf2 = ((UInt128)1 << index);
+    if ((unknownBitwise & powerOf2) != 0)
+        return State.Unknown;
+    else if ((springs & powerOf2) != 0)
+        return State.Damaged;
+    else
+        return State.Operational;
 }
 
 HashSet<(UInt128, UInt128)> existingEntries = new();
@@ -121,7 +133,7 @@ Int64 recurse(List<int> format, int rowLength, UInt128 springWithSubstitutions, 
                 existingEntries.Add(cacheKey);
                 if (depth == targetDepth)
                 {
-                    if (CheckIfFitFormat(possibility, rowLength, format))
+                    if (CheckIfFitFormat(possibility, rowLength, format) == format.Count)
                     {
                         count++;
                     }
@@ -137,43 +149,86 @@ Int64 recurse(List<int> format, int rowLength, UInt128 springWithSubstitutions, 
     return count;
 }
 
-Int64 recurseP2(List<int> format, int rowLength, UInt128 springWithSubstitutions, UInt128 unknownBitwise, int targetDepth, int depth = 1)
+Int64 recurseP2(List<int> format, int rowLength, UInt128 springWithSubstitutions, UInt128 unknownBitwise, int depth = 0)
 {
-    if (depth == 1)
-        existingEntries.Clear();
-    Int64 count = 0;
-    for (int i = 0; i < rowLength; i++)
+    if (format.Count == 0)
     {
-        UInt128 powerOf2 = ((UInt128)1 << i);
-        if ((unknownBitwise & powerOf2) != 0)
+        if (springWithSubstitutions == 0)
         {
-            UInt128 possibility = springWithSubstitutions | powerOf2;
-            UInt128 possibilityUnknownBitwise = unknownBitwise & (~powerOf2);
-            (UInt128, UInt128) cacheKey = (possibility, possibilityUnknownBitwise);
-            /*
-            Console.WriteLine(BitwiseToString(rowLength, springWithSubstitutions, unknownBitwise));
-            Console.WriteLine("->");
-            Console.WriteLine(BitwiseToString(rowLength, possibility, possibilityUnknownBitwise));
-            Console.WriteLine($"{Convert.ToString((Int64)unknownBitwise, 2).PadLeft(rowLength, '0')}");
-            Console.WriteLine($"{Convert.ToString((Int64)possibilityUnknownBitwise, 2).PadLeft(rowLength, '0')}");
-            Console.ReadLine();
-            */
-            if (!existingEntries.Contains(cacheKey))
+            Console.WriteLine($"{"".PadLeft(depth * 4, ' ')}MATCH");
+            return 1;
+        }
+        else
+        {
+            return 0;
+        }
+    }
+    else
+    {
+        if (unknownBitwise == 0)
+        {
+            if (CheckIfFitFormat(springWithSubstitutions, rowLength, format) == format.Count)
             {
-                existingEntries.Add(cacheKey);
-                if (depth == targetDepth)
-                {
-                    if (CheckIfFitFormat(possibility, rowLength, format))
-                    {
-                        count++;
-                    }
-                }
-                else
-                {
-                    Int64 recurseVal = recurse(format, rowLength, possibility, possibilityUnknownBitwise, targetDepth, depth + 1);
-                    count += recurseVal;
-                }
+                Console.WriteLine($"{"".PadLeft(depth * 4, ' ')}MATCH");
+                return 1;
             }
+            else
+                return 0;
+        }
+    }
+    Int64 count = 0;
+    int batchLengthWeAreLookingFor = format[0];
+    // looking for a straight run of unknowns/damaged machines batchLengthWeAreLookingFor long
+    // if it's damaged machines it has to be the right length
+    // if it's unknowns we have to permutate
+    int i;
+    for (i = 0; GetStateOfBitwise(springWithSubstitutions, unknownBitwise, i) == State.Operational; i++) ;
+    // i is the first index that isn't just operational
+    int j;
+    List<int> indexOfUnknowns = new();
+    for (j = i; j < rowLength; j++)
+    {
+        State state = GetStateOfBitwise(springWithSubstitutions, unknownBitwise, j);
+        if (state == State.Operational)
+            break;
+        if (state == State.Unknown)
+            indexOfUnknowns.Add(j - i);
+    }
+    int straightRunLength = j - i;
+    // j is the first index after the straight run
+    // we need to permutate this straight run, (including with all .)
+    UInt128 straightRunMask = (((UInt128)1 << j) - 1) - (((UInt128)1 << i) - 1);
+    UInt128 straightRun = (springWithSubstitutions & straightRunMask) >> i;
+    UInt128 straightRunUnknownBitwise = (unknownBitwise & straightRunMask) >> i;
+    Console.WriteLine($"{"".PadLeft(depth * 4, ' ')}Total: {BitwiseToString(rowLength, springWithSubstitutions, unknownBitwise)}");
+    Console.WriteLine($"{"".PadLeft(depth * 4, ' ')}Straight run mask: {Convert.ToString((Int64)straightRunMask, 2).PadLeft(rowLength, '0')}");
+    Console.WriteLine($"{"".PadLeft(depth * 4, ' ')}Straight run: {BitwiseToString(straightRunLength, straightRun, straightRunUnknownBitwise)}");
+    for (UInt128 permutation = 0; permutation < ((UInt128)1 << indexOfUnknowns.Count); permutation++)
+    {
+        UInt128 possibility = straightRun;
+        for (int n = 0; n < indexOfUnknowns.Count; n++)
+        {
+            possibility |= ((permutation & ((UInt128)1 << n)) >> n) << indexOfUnknowns[n];
+        }
+        int howManyFormatBlocksDoesItMatch = CheckIfFitFormat(possibility, straightRunLength, format);
+        if (howManyFormatBlocksDoesItMatch >= 0)
+        {
+            Console.WriteLine($"{"".PadLeft(depth * 4, ' ')}Permutation: {Convert.ToString((Int64)permutation, 2).PadLeft(indexOfUnknowns.Count, '0')}");
+            //Console.WriteLine($"Possibility: {Convert.ToString((Int64)possibility, 2).PadLeft(straightRunLength, '0')}");
+            Console.WriteLine($"{"".PadLeft(depth * 4, ' ')}Possibility: {BitwiseToString(straightRunLength, possibility, 0)}");
+            Console.WriteLine($"{"".PadLeft(depth * 4, ' ')}Matches # format blocks: {howManyFormatBlocksDoesItMatch}");
+
+            // strip the format part it matches and pass to child recursion
+            UInt128 leftOver = (springWithSubstitutions & ~straightRunMask) >> j;
+            UInt128 leftOverUnknownBitwise = (unknownBitwise & ~straightRunMask) >> j;
+            int leftOverLength = rowLength - j;
+            List<int> leftOverFormat = format.GetRange(howManyFormatBlocksDoesItMatch, format.Count - howManyFormatBlocksDoesItMatch);
+            Console.WriteLine($"{"".PadLeft(depth * 4, ' ')}Left over: {BitwiseToString(leftOverLength, leftOver, leftOverUnknownBitwise)}");
+            count += recurseP2(leftOverFormat, leftOverLength, leftOver, leftOverUnknownBitwise, depth + 1);
+        }
+        else
+        {
+            // incompatible with format, invalid
         }
     }
     return count;
@@ -194,7 +249,9 @@ void P1()
         if (numberOfUnknownDamaged == 0)
             val = 1;
         else
-            val = recurse(format, rowLength, springs, unknownBitwise, numberOfUnknownDamaged);
+            val = recurseP2(format, rowLength, springs, unknownBitwise);
+            //val = recurse(format, rowLength, springs, unknownBitwise, numberOfUnknownDamaged);
+        //Console.WriteLine(val);
         result += val;
         i++;
     }
@@ -210,7 +267,7 @@ void P2()
     int i = 0;
     foreach (var entry in unfoldedEntries)
     {
-        //Console.WriteLine(i);
+        Console.WriteLine(i);
         (int rowLength, int numberOfKnownDamaged, UInt128 springs, UInt128 unknownBitwise, List<int> format) = entry;
         int numberOfDamaged = format.Sum();
         int numberOfUnknownDamaged = numberOfDamaged - numberOfKnownDamaged;
@@ -219,7 +276,7 @@ void P2()
             val = 1;
         else
             val = recurse(format, rowLength, springs, unknownBitwise, numberOfUnknownDamaged);
-        Console.WriteLine(val);
+        //Console.WriteLine(val);
         result += val;
         i++;
     }
