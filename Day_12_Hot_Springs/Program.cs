@@ -368,7 +368,7 @@ void P1()
     int i = 0;
     foreach (var entry in entries)
     {
-        //Console.WriteLine(i);
+        Console.WriteLine(i);
         (int rowLength, int numberOfKnownDamaged, UInt128 springs, UInt128 unknownBitwise, List<int> format) = entry;
         int numberOfDamaged = format.Sum();
         int numberOfUnknownDamaged = numberOfDamaged - numberOfKnownDamaged;
@@ -378,8 +378,8 @@ void P1()
         else
             val = recurseP3(rowLength, format, springs, unknownBitwise);
         //val = recurse(format, rowLength, springs, unknownBitwise, numberOfUnknownDamaged);
-        Console.WriteLine(val);
-        Console.ReadLine();
+        //Console.WriteLine(val);
+        //Console.ReadLine();
         result += val;
         i++;
     }
