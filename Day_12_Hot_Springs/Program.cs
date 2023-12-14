@@ -44,8 +44,12 @@ string BitwiseToString(int rowLength, UInt128 springWithSubstitutions, UInt128 u
     return s;
 }
 
+Dictionary<(UInt128, int, string), int> checkCache = new();
 int CheckIfFitFormat(UInt128 possibility, int rowLength, List<int> format)
 {
+    var cacheKey = (possibility, rowLength, string.Join(',', format));
+    if (checkCache.ContainsKey(cacheKey))
+        return checkCache[cacheKey];
     //string s = BitwiseToString(rowLength, possibility, 0);
     List<int> actualFormat = new();
     bool inBatch = false;
@@ -79,19 +83,23 @@ int CheckIfFitFormat(UInt128 possibility, int rowLength, List<int> format)
     }
     int matches = 0;
     if (actualFormat.Count > format.Count)
-        return -1;
-    for (int i = 0; i < actualFormat.Count; i++)
+        matches = -1;
+    else
     {
-        if (format[i] == actualFormat[i])
+        for (int i = 0; i < actualFormat.Count; i++)
         {
-            matches++;
-        }
-        else
-        {
-            matches = -1;
-            break;
+            if (format[i] == actualFormat[i])
+            {
+                matches++;
+            }
+            else
+            {
+                matches = -1;
+                break;
+            }
         }
     }
+    checkCache[cacheKey] = matches;
     return matches;
 }
 
@@ -149,13 +157,14 @@ Int64 recurse(List<int> format, int rowLength, UInt128 springWithSubstitutions, 
     return count;
 }
 
+Dictionary<(string, int, UInt128, UInt128), Int64> cache = new();
 Int64 recurseP2(List<int> format, int rowLength, UInt128 springWithSubstitutions, UInt128 unknownBitwise, int depth = 0)
 {
     if (format.Count == 0)
     {
         if (springWithSubstitutions == 0)
         {
-            Console.WriteLine($"{"".PadLeft(depth * 4, ' ')}MATCH");
+            //Console.WriteLine($"{"".PadLeft(depth * 4, ' ')}MATCH");
             return 1;
         }
         else
@@ -169,7 +178,7 @@ Int64 recurseP2(List<int> format, int rowLength, UInt128 springWithSubstitutions
         {
             if (CheckIfFitFormat(springWithSubstitutions, rowLength, format) == format.Count)
             {
-                Console.WriteLine($"{"".PadLeft(depth * 4, ' ')}MATCH");
+                //Console.WriteLine($"{"".PadLeft(depth * 4, ' ')}MATCH");
                 return 1;
             }
             else
@@ -186,11 +195,14 @@ Int64 recurseP2(List<int> format, int rowLength, UInt128 springWithSubstitutions
     // i is the first index that isn't just operational
     int j;
     List<int> indexOfUnknowns = new();
+    int numberOfKnownDamaged = 0;
     for (j = i; j < rowLength; j++)
     {
         State state = GetStateOfBitwise(springWithSubstitutions, unknownBitwise, j);
         if (state == State.Operational)
             break;
+        if (state == State.Damaged)
+            numberOfKnownDamaged++;
         if (state == State.Unknown)
             indexOfUnknowns.Add(j - i);
     }
@@ -214,23 +226,138 @@ Int64 recurseP2(List<int> format, int rowLength, UInt128 springWithSubstitutions
         if (howManyFormatBlocksDoesItMatch >= 0)
         {
             Console.WriteLine($"{"".PadLeft(depth * 4, ' ')}Permutation: {Convert.ToString((Int64)permutation, 2).PadLeft(indexOfUnknowns.Count, '0')}");
-            //Console.WriteLine($"Possibility: {Convert.ToString((Int64)possibility, 2).PadLeft(straightRunLength, '0')}");
             Console.WriteLine($"{"".PadLeft(depth * 4, ' ')}Possibility: {BitwiseToString(straightRunLength, possibility, 0)}");
             Console.WriteLine($"{"".PadLeft(depth * 4, ' ')}Matches # format blocks: {howManyFormatBlocksDoesItMatch}");
-
             // strip the format part it matches and pass to child recursion
             UInt128 leftOver = (springWithSubstitutions & ~straightRunMask) >> j;
             UInt128 leftOverUnknownBitwise = (unknownBitwise & ~straightRunMask) >> j;
             int leftOverLength = rowLength - j;
             List<int> leftOverFormat = format.GetRange(howManyFormatBlocksDoesItMatch, format.Count - howManyFormatBlocksDoesItMatch);
-            Console.WriteLine($"{"".PadLeft(depth * 4, ' ')}Left over: {BitwiseToString(leftOverLength, leftOver, leftOverUnknownBitwise)}");
-            count += recurseP2(leftOverFormat, leftOverLength, leftOver, leftOverUnknownBitwise, depth + 1);
+            string leftOverFormatStrRep = string.Join(',', leftOverFormat);
+            var cacheKey = (leftOverFormatStrRep, leftOverLength, leftOver, leftOverUnknownBitwise);
+            Int64 val;
+            if (!cache.ContainsKey(cacheKey))
+            {
+                Console.WriteLine($"{"".PadLeft(depth * 4, ' ')}Left over: {BitwiseToString(leftOverLength, leftOver, leftOverUnknownBitwise)}");
+                Console.ReadLine();
+                val = recurseP2(leftOverFormat, leftOverLength, leftOver, leftOverUnknownBitwise, depth + 1);
+                cache[cacheKey] = val;
+            }
+            else
+            {
+                //Console.WriteLine($"{"".PadLeft(depth * 4, ' ')}CACHE HIT");
+                val = cache[cacheKey];
+            }
+            count += val;
         }
         else
         {
             // incompatible with format, invalid
         }
     }
+    return count;
+}
+
+Dictionary<(int, int, int), Int64> cacheP3 = new();
+Int64 recurseP3(int rowLength, List<int> format, UInt128 springWithSubstitutions, UInt128 unknownBitwise, int index = 0, int groupLength = -1, int groupIndex = -1, int depth = 0)
+{
+    if (depth == 0)
+        cacheP3.Clear();
+    var cacheKey = (index, groupLength, groupIndex);
+    if (cacheP3.ContainsKey(cacheKey))
+        return cacheP3[cacheKey];
+
+    //Console.WriteLine($"{"".PadLeft(depth * 4, ' ')}{BitwiseToString(rowLength, springWithSubstitutions, unknownBitwise)}");
+    //Console.ReadLine();
+    if (index >= rowLength)
+    {
+        // check it's compatible with format
+        if (groupIndex == format.Count - 1)
+        {
+            if (groupLength != -1)
+            {
+                if (groupLength == format[format.Count - 1])
+                {
+                    //Console.WriteLine($"{"".PadLeft(depth * 4, ' ')}Match");
+                    return 1;
+                }
+                else
+                {
+                    //Console.WriteLine($"{"".PadLeft(depth * 4, ' ')}No match");
+                    return 0;
+                }
+            }
+            else
+            {
+                // . would have filtered out no match, so this is success
+                //Console.WriteLine($"{"".PadLeft(depth * 4, ' ')}Match");
+                return 1;
+            }
+        }
+        else
+        {
+            //Console.WriteLine($"{"".PadLeft(depth * 4, ' ')}No match");
+            return 0;
+        }
+    }
+    Int64 count = 0;
+    UInt128 newUnknownBitwise = (unknownBitwise & ~((UInt128)1 << index));
+    var state = GetStateOfBitwise(springWithSubstitutions, unknownBitwise, index);
+    if (state == State.Operational || state == State.Unknown)
+    {
+        bool valid = true;
+        UInt128 newSpringWithSubstitutions = (springWithSubstitutions & ~((UInt128)1 << index));
+        if (groupLength != -1)
+        {
+            // check it's compatible with format
+            if (groupIndex < format.Count)
+            {
+                if (groupLength == format[groupIndex])
+                {
+                    //Console.WriteLine($"{"".PadLeft(depth * 4, ' ')}Potential Match");
+                }
+                else
+                {
+                    //Console.WriteLine($"{"".PadLeft(depth * 4, ' ')}No match");
+                    valid = false;
+                }
+            }
+            else
+            {
+                //Console.WriteLine($"{"".PadLeft(depth * 4, ' ')}No match");
+                valid = false;
+            }
+        }
+        if (valid)
+            count += recurseP3(rowLength, format, newSpringWithSubstitutions, newUnknownBitwise, index + 1, -1, groupIndex, depth + 1);
+    }
+    if (state == State.Damaged || state == State.Unknown)
+    {
+        UInt128 newSpringWithSubstitutions = (springWithSubstitutions | ((UInt128)1 << index));
+        if (groupLength == -1)
+        {
+            bool valid = true;
+            if (groupIndex + 1 >= format.Count)
+            {
+                //Console.WriteLine($"{"".PadLeft(depth * 4, ' ')}No match");
+                valid = false;
+            }
+            if (valid)
+                count += recurseP3(rowLength, format, newSpringWithSubstitutions, newUnknownBitwise, index + 1, 1, groupIndex + 1, depth + 1);
+        }
+        else
+        {
+            bool valid = true;
+            if (groupLength + 1 > format[groupIndex])
+            {
+                //Console.WriteLine($"{"".PadLeft(depth * 4, ' ')}No match");
+                valid = false;
+            }
+            if (valid)
+                count += recurseP3(rowLength, format, newSpringWithSubstitutions, newUnknownBitwise, index + 1, groupLength + 1, groupIndex, depth + 1);
+        }
+    }
+    cacheP3[cacheKey] = count;
     return count;
 }
 
@@ -241,7 +368,7 @@ void P1()
     int i = 0;
     foreach (var entry in entries)
     {
-        Console.WriteLine(i);
+        //Console.WriteLine(i);
         (int rowLength, int numberOfKnownDamaged, UInt128 springs, UInt128 unknownBitwise, List<int> format) = entry;
         int numberOfDamaged = format.Sum();
         int numberOfUnknownDamaged = numberOfDamaged - numberOfKnownDamaged;
@@ -249,9 +376,10 @@ void P1()
         if (numberOfUnknownDamaged == 0)
             val = 1;
         else
-            val = recurseP2(format, rowLength, springs, unknownBitwise);
-            //val = recurse(format, rowLength, springs, unknownBitwise, numberOfUnknownDamaged);
-        //Console.WriteLine(val);
+            val = recurseP3(rowLength, format, springs, unknownBitwise);
+        //val = recurse(format, rowLength, springs, unknownBitwise, numberOfUnknownDamaged);
+        Console.WriteLine(val);
+        Console.ReadLine();
         result += val;
         i++;
     }
@@ -267,7 +395,7 @@ void P2()
     int i = 0;
     foreach (var entry in unfoldedEntries)
     {
-        Console.WriteLine(i);
+        //Console.WriteLine(i);
         (int rowLength, int numberOfKnownDamaged, UInt128 springs, UInt128 unknownBitwise, List<int> format) = entry;
         int numberOfDamaged = format.Sum();
         int numberOfUnknownDamaged = numberOfDamaged - numberOfKnownDamaged;
@@ -275,8 +403,10 @@ void P2()
         if (numberOfUnknownDamaged == 0)
             val = 1;
         else
-            val = recurse(format, rowLength, springs, unknownBitwise, numberOfUnknownDamaged);
-        //Console.WriteLine(val);
+            val = recurseP3(rowLength, format, springs, unknownBitwise);
+        //val = recurse(format, rowLength, springs, unknownBitwise, numberOfUnknownDamaged);
+        Console.WriteLine(val);
+        Console.ReadLine();
         result += val;
         i++;
     }
@@ -296,9 +426,9 @@ foreach (var entry in entries)
     List<int> newFormat = new(format);
     UInt128 newSprings = springs;
     UInt128 newUnknownBitwise = unknownBitwise;
-    Console.WriteLine($"####");
-    Console.WriteLine($"{Convert.ToString((Int64)unknownBitwise, 2).PadLeft(newRowLength, '0')}");
-    Console.WriteLine($"{Convert.ToString((Int64)springs, 2).PadLeft(newRowLength, '0')}");
+    //Console.WriteLine($"####");
+    //Console.WriteLine($"{Convert.ToString((Int64)unknownBitwise, 2).PadLeft(newRowLength, '0')}");
+    //Console.WriteLine($"{Convert.ToString((Int64)springs, 2).PadLeft(newRowLength, '0')}");
     for (int i = 1; i <= 4; i++)
     {
         newUnknownBitwise |= ((UInt128)1 << (i * (rowLength + 1)) - 1);
@@ -307,10 +437,10 @@ foreach (var entry in entries)
         //springs.AddRange(originalSprings);
         newFormat.AddRange(format);
     }
-    Console.WriteLine($"Unknown bitwise: {Convert.ToString((Int64)newUnknownBitwise, 2).PadLeft(newRowLength, '0')}");
-    Console.WriteLine($"Spring row:      {Convert.ToString((Int64)newSprings, 2).PadLeft(newRowLength, '0')}");
-    Console.WriteLine(BitwiseToString(newRowLength, newSprings, newUnknownBitwise));
-    Console.WriteLine(string.Join(',', newFormat));
+    //Console.WriteLine($"Unknown bitwise: {Convert.ToString((Int64)newUnknownBitwise, 2).PadLeft(newRowLength, '0')}");
+    //Console.WriteLine($"Spring row:      {Convert.ToString((Int64)newSprings, 2).PadLeft(newRowLength, '0')}");
+    //Console.WriteLine(BitwiseToString(newRowLength, newSprings, newUnknownBitwise));
+    //Console.WriteLine(string.Join(',', newFormat));
 
     unfoldedEntries.Add((newRowLength, newNumberOfKnownDamaged, newSprings, newUnknownBitwise, newFormat));
 }
