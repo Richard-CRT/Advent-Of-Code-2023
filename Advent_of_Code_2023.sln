@@ -39,6 +39,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Day_15_Lens_Library", "Day_
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Day_16_The_Floor_Will_Be_Lava", "Day_16_The_Floor_Will_Be_Lava\Day_16_The_Floor_Will_Be_Lava.csproj", "{82255E0E-5995-42DE-9520-533FC838F120}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Day_17_Clumsy_Crucible", "Day_17_Clumsy_Crucible\Day_17_Clumsy_Crucible.csproj", "{D9DCC5A8-A89D-4FBF-BA9F-683F313CC3D6}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -117,6 +119,10 @@ Global
 		{82255E0E-5995-42DE-9520-533FC838F120}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{82255E0E-5995-42DE-9520-533FC838F120}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{82255E0E-5995-42DE-9520-533FC838F120}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D9DCC5A8-A89D-4FBF-BA9F-683F313CC3D6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D9DCC5A8-A89D-4FBF-BA9F-683F313CC3D6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D9DCC5A8-A89D-4FBF-BA9F-683F313CC3D6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D9DCC5A8-A89D-4FBF-BA9F-683F313CC3D6}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -7,6 +7,23 @@ using System.Text.RegularExpressions;
 
 namespace AdventOfCodeUtilities
 {
+    // Useful characters for debug and visualisation
+    // ┘ ┐ └ ┌ │ ─ 
+    // ┤ ┴ ├ ┬ ┼
+    //
+    // ╝ ╗ ╚ ╔ ║ ═
+    // ╣ ╩ ╠ ╦ ╬
+    //
+    // ╛ ╕ ╘ ╒
+    // ╡ ╧ ╞ ╤ ╪
+    //
+    // ╜ ╖ ╙ ╓
+    // ╢ ╨ ╟ ╥ ╫
+    //
+    // █▓▒░
+    // ▄▌▀▐
+    // ♥♦♣♠
+
     public static class AoC
     {
         public static Int64 GCF(Int64 a, Int64 b)
