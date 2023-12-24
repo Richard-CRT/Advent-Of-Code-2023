@@ -127,12 +127,20 @@ Int64 cleverSolve(HashSet<(int, int, int)> verticalLines, HashSet<(int, int, int
     mapMaxY = verticalLines.MaxBy(tup3 => tup3.Item3).Item3;
 
     Int64 dugCount = 0;
+    int lastPerc = -1;
     for (int y = mapMinY; y <= mapMaxY; y++)
     {
         if (Math.Abs(y) % 100_000 == 0)
         {
             int perc = (100 * (y - mapMinY)) / (mapMaxY - mapMinY);
-            Console.WriteLine($"[{"".PadLeft(perc,'=').PadRight(100,' ')}] {perc}%");
+            if (perc != lastPerc)
+            {
+                int currentLineCursor = Console.CursorTop;
+                if (currentLineCursor > 0)
+                    Console.SetCursorPosition(0, currentLineCursor - 1);
+                Console.WriteLine($"[{"".PadLeft(perc, '=').PadRight(100, ' ')}] {perc.ToString().PadLeft(3)}%");
+                lastPerc = perc;
+            }
         }
         Int64 rowDugCount = 0;
         var verticalLinesAffectingThisRow = verticalLines.Where(tup3 => tup3.Item2 <= y && tup3.Item3 >= y).OrderBy(tup3 => tup3.Item1).ToList();
