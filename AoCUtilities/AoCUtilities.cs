@@ -42,6 +42,11 @@ namespace AdventOfCodeUtilities
             return (a / GCF(a, b)) * b;
         }
 
+        public static Int64 LCM(params Int64[] nums)
+        {
+            return nums.Aggregate(1, (Int64 lcm, Int64 num) => LCM(lcm, num));
+        }
+
         static public void DebugClear()
         {
 #if DEBUG || OVERRIDE
