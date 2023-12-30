@@ -49,6 +49,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Day_22_Sand_Slabs", "Day_22
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Day_20_Pulse_Propagation", "Day_20_Pulse_Propagation\Day_20_Pulse_Propagation.csproj", "{D0C6B04C-DB7D-44FD-B164-E7BB5C022D77}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Day_21_Step_Counter", "Day_21_Step_Counter\Day_21_Step_Counter.csproj", "{C46C3418-E872-4B6D-9E31-5684F9BD1812}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -147,6 +149,10 @@ Global
 		{D0C6B04C-DB7D-44FD-B164-E7BB5C022D77}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D0C6B04C-DB7D-44FD-B164-E7BB5C022D77}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D0C6B04C-DB7D-44FD-B164-E7BB5C022D77}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C46C3418-E872-4B6D-9E31-5684F9BD1812}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C46C3418-E872-4B6D-9E31-5684F9BD1812}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C46C3418-E872-4B6D-9E31-5684F9BD1812}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C46C3418-E872-4B6D-9E31-5684F9BD1812}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
