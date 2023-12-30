@@ -76,6 +76,7 @@ string GetStringRep(List<List<Cell?>> map)
     return s;
 }
 
+#pragma warning disable CS8321
 void PrintMap(List<List<Cell?>> map)
 {
     Console.WriteLine($"{GetStringRep(map)}\n");

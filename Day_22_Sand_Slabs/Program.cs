@@ -54,8 +54,6 @@ foreach (string s in inputList)
 
 void P1()
 {
-    int result = 0;
-
     bool anyMoved = true;
     while (anyMoved)
     {

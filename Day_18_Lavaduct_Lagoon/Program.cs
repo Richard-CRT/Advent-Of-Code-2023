@@ -13,6 +13,7 @@ int mapMinY = 0;
 int mapMaxX = 0;
 int mapMaxY = 0;
 
+#pragma warning disable CS8321
 void PrintMap()
 {
     for (int y = mapMinY - 2; y <= mapMaxY + 2; y++)
@@ -257,15 +258,3 @@ void P2()
 //P1_slow();
 P1_fast();
 P2();
-
-public class Cell
-{
-    bool Dug = false;
-    int X;
-    int Y;
-
-    public Cell(bool dug = false)
-    {
-        Dug = dug;
-    }
-}
