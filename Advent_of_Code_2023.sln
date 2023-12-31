@@ -55,6 +55,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Day_23_A_Long_Walk", "Day_2
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Day_24_Never_Tell_Me_The_Odds", "Day_24_Never_Tell_Me_The_Odds\Day_24_Never_Tell_Me_The_Odds.csproj", "{43214D44-5DB7-4B43-B364-150270457B48}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Day_25_Snowverload", "Day_25_Snowverload\Day_25_Snowverload.csproj", "{EB19281D-4488-4C91-A555-A66EEB59A96A}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -165,6 +167,10 @@ Global
 		{43214D44-5DB7-4B43-B364-150270457B48}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{43214D44-5DB7-4B43-B364-150270457B48}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{43214D44-5DB7-4B43-B364-150270457B48}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EB19281D-4488-4C91-A555-A66EEB59A96A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EB19281D-4488-4C91-A555-A66EEB59A96A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EB19281D-4488-4C91-A555-A66EEB59A96A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EB19281D-4488-4C91-A555-A66EEB59A96A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
