@@ -53,6 +53,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Day_21_Step_Counter", "Day_
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Day_23_A_Long_Walk", "Day_23_A_Long_Walk\Day_23_A_Long_Walk.csproj", "{0B0D91F3-FB8E-4934-9959-8282DB8EA60F}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Day_24_Never_Tell_Me_The_Odds", "Day_24_Never_Tell_Me_The_Odds\Day_24_Never_Tell_Me_The_Odds.csproj", "{43214D44-5DB7-4B43-B364-150270457B48}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -159,6 +161,10 @@ Global
 		{0B0D91F3-FB8E-4934-9959-8282DB8EA60F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0B0D91F3-FB8E-4934-9959-8282DB8EA60F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0B0D91F3-FB8E-4934-9959-8282DB8EA60F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{43214D44-5DB7-4B43-B364-150270457B48}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{43214D44-5DB7-4B43-B364-150270457B48}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{43214D44-5DB7-4B43-B364-150270457B48}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{43214D44-5DB7-4B43-B364-150270457B48}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
